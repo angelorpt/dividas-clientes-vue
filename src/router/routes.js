@@ -1,15 +1,25 @@
+const MainLayout   = () => import('layouts/MainLayout.vue')
+const ClienteIndex = () => import('pages/Cliente/Index.vue')
 
 const routes = [
   {
     path: '/',
-    component: () => import('layouts/MainLayout.vue'),
+    component: MainLayout,
     children: [
       { path: '', component: () => import('pages/Index.vue') }
     ]
   },
   {
+    path: '/clientes',
+    component: MainLayout,
+    children: [
+      { path: '/'        , component: ClienteIndex },
+      { path: '/clientes', component: ClienteIndex }
+    ]
+  },
+  {
     path: '/dividas',
-    component: () => import('layouts/MainLayout.vue'),
+    component: MainLayout,
     children: [
       { path: '', component: () => import('pages/Index.vue') }
     ]

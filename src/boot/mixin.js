@@ -1,8 +1,16 @@
 import Vue from 'vue'
-import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
+import Container       from 'components/Utils/Container'
+import Titulo          from 'components/Utils/Titulo'
+import Row             from 'components/Utils/Row'
+import Button          from 'components/Utils/Button'
 
 Vue.mixin({
-  components: { },
+  components: {
+    Container,
+    Titulo,
+    Row,
+    Button
+  },
   data() {
     return {
     }
