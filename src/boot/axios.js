@@ -1,4 +1,9 @@
-import Vue from 'vue'
+import Vue   from 'vue'
 import axios from 'axios'
 
-Vue.prototype.$axios = axios
+const Axios = axios.create({
+    baseURL: 'http://localhost:8000/api',
+    timeout: 30000,
+});
+
+Vue.prototype.$axios = Axios
