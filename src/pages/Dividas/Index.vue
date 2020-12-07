@@ -6,6 +6,13 @@
       <Titulo titulo="Dívidas"
               subtitulo="Dívidas dos Clientes"/>
 
+      <div class="row justify-end q-ma-sm">
+        <Button icon="add_circle"
+                label="Nova"
+                color="primary"
+                @click="showDialogAdd=true" />
+      </div>              
+
       <q-list class="rounded-borders">
 
         <div v-for="cliente in listaClientesToTable" :key="cliente.id">
@@ -17,11 +24,8 @@
             <q-item-section side>
               <span>{{cliente.total}}</span>
             </q-item-section>
-            <q-item-section side>
-              <ButtonMenu  icon="more_vert"
-                          :listaMenu="listaMenu"
-                          @novo="showDialogAdd = true"
-                          @detalhes="detalhes(cliente)" />
+            <q-item-section side top >
+              <Button icon="list_alt" textColor="primary" flat round @click="detalhes(cliente)" />
             </q-item-section>
           </q-item>
 
@@ -31,44 +35,10 @@
       </q-list>
     </Container>
 
-    <DialogConfirmar  :show="showDialogAdd"
-                      titulo="Nova Despesa"
-                      icon="add"
-                      class="row"
-                      @close="closeDialog"
-                      @click="salvar" >
 
-      <Row class="q-gutter-sm">
+    <DividaSalvar :show="showDialogAdd"
+                  @close="closeDialog" />
 
-        <q-select v-model="divida.cliente"
-                  :options="listaClientesToSelect"
-                  class="col-12"
-                  label="Cliente" />
-
-        <q-input  type="text"
-                  class="col-12"
-                  label="Motivo" 
-                  maxlength="100"
-                  v-model="divida.motivo" />  
-
-        <div class="k-flex-column">
-
-          <q-input v-model="divida.valor" type="text" label="Valor" class="col-6" />
-
-          <q-input label="Data" v-model="divida.data" class="col-6 q-mt-sm" mask="##/##/####" :rules="['date:DD/MM/YYYY', val => !!val || '* Obrigatório']">
-            <template v-slot:append>
-              <q-icon name="event" class="cursor-pointer text-indigo">
-                <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
-                  <q-date v-model="divida.data" mask="DD/MM/YYYY" @input="() => $refs.qDateProxy.hide()"  />
-                </q-popup-proxy>
-              </q-icon>
-            </template>
-          </q-input>
-        </div>
-
-      </Row>
-
-    </DialogConfirmar>
 
     <DialogConfirmar :show="showDialogDividas"
                       titulo="Dívidas"
@@ -92,14 +62,11 @@ import ButtonAction     from 'components/Utils/ButtonAction'
 import ButtonMenu       from 'components/Utils/Menu/ButtonMenu'
 import DialogConfirmar  from 'components/Utils/DialogConfirmar'
 import ListaDividas     from 'components/Divida/Lista'
+import DividaSalvar     from 'components/Divida/Salvar'
 
 export default {
   name: 'PageDividasIndex',
-  components: {
-    ButtonMenu,
-    DialogConfirmar,
-    ListaDividas
-  },
+  components: { ButtonMenu, DialogConfirmar, ListaDividas, DividaSalvar },
   data() {
     return {
       listaMenu: [
@@ -136,14 +103,6 @@ export default {
     ...mapState   ('Cliente', ['lstCliente']),
     ...mapGetters ('Cliente', ['listaClientesToSelect', 'listaClientesToTable']),
   },
-  watch: {
-    // divida: {
-    //   handler() {
-    //     this.divida.valor = this.$currency(this.divida.valor, { fromCents: true }); 
-    //   },
-    //   deep: true
-    // }
-  },
   methods: {
     ...mapActions ('Cliente', ['loadClientes']),
     ...mapActions ('Divida' , ['salvarDivida']),
@@ -162,6 +121,7 @@ export default {
     },
 
     closeDialog() {
+      console.log('close');
       this.showDialogAdd     = false
       this.showDialogDividas = false
       this.divida = {
@@ -184,7 +144,7 @@ export default {
 
 <style lang="scss">
   .k-flex-column {
-    display: flex;
-    flex-direction: column;
+    display : flex;
+    flex-direction : column;
   }
 </style>
