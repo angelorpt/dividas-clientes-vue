@@ -2,7 +2,7 @@
   <div>
     <!-- Dialog Deletar -->
     <q-dialog v-model="internal_show">
-      <q-card style="min-width:30%">
+      <q-card style="width: 700px; max-width: 80vw;">
 
         <!-- Título -->
         <q-card-section class="bg-primary text-white">

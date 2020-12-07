@@ -21,7 +21,7 @@
               <ButtonMenu  icon="more_vert"
                           :listaMenu="listaMenu"
                           @novo="showDialogAdd = true"
-                          @detalhes="detalhes" />
+                          @detalhes="detalhes(cliente)" />
             </q-item-section>
           </q-item>
 
@@ -70,6 +70,17 @@
 
     </DialogConfirmar>
 
+    <DialogConfirmar :show="showDialogDividas"
+                      titulo="Dívidas"
+                      icon="payments"
+                      class="q-pa-xm q-ma-xm col-12"
+                      @close="showDialogDividas = false"
+                      @click="closeDialog" >
+      
+      <ListaDividas :cliente_id="cliente_sel.id" />
+
+    </DialogConfirmar>
+
   </q-page>
 </template>
 
@@ -80,12 +91,14 @@ import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
 import ButtonAction     from 'components/Utils/ButtonAction'
 import ButtonMenu       from 'components/Utils/Menu/ButtonMenu'
 import DialogConfirmar  from 'components/Utils/DialogConfirmar'
+import ListaDividas     from 'components/Divida/Lista'
 
 export default {
   name: 'PageDividasIndex',
   components: {
     ButtonMenu,
-    DialogConfirmar
+    DialogConfirmar,
+    ListaDividas
   },
   data() {
     return {
@@ -109,9 +122,10 @@ export default {
         data    : null
       },
 
-      showDialogAdd    : false,
-      showDialogDelete : false,
-      showDialogEdit   : false,
+      cliente_sel: {},
+
+      showDialogAdd     : false,
+      showDialogDividas : false,
 
     }
   },
@@ -142,12 +156,14 @@ export default {
       alert('testes');
     },
 
-    detalhes() {
-      alert('detalhes');
+    detalhes(cliente) {
+      this.cliente_sel = cliente;
+      this.showDialogDividas = true;
     },
 
     closeDialog() {
-      this.showDialogAdd = false
+      this.showDialogAdd     = false
+      this.showDialogDividas = false
       this.divida = {
         cliente : null,
         motivo  : '',
