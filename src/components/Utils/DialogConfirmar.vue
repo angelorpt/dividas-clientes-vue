@@ -2,18 +2,18 @@
   <div>
     <!-- Dialog Deletar -->
     <q-dialog v-model="internal_show">
-      <q-card style="width:30%">
+      <q-card style="min-width:30%">
 
         <!-- Título -->
         <q-card-section class="bg-primary text-white">
           <div class="text-h6">
-          <q-avatar :icon="icon" text-color="white" />{{titulo}}
+            <q-avatar :icon="icon" text-color="white" />{{titulo}}
           </div>
         </q-card-section>
       
         <!-- Conteúdo -->
         <q-card-section class="row items-center">
-          <span class="q-ml-sm">
+          <span class="q-pa-sm col-12">
             <slot></slot>
           </span>
         </q-card-section>
@@ -32,7 +32,20 @@
 <script>
 export default {
   name: 'ComponentDialogConfirmar',
-    props: ['show', 'titulo', 'icon'],
+    props: {
+      show: {
+        type    : Boolean,
+        default : false,
+      },
+      titulo: {
+        type    : String,
+        default : '',
+      },
+      icon: {
+        type    : String,
+        default : '',
+      }
+    },
     data() {
       return {
         internal_show: false
