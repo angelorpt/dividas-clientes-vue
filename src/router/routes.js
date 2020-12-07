@@ -1,5 +1,6 @@
 const MainLayout   = () => import('layouts/MainLayout.vue')
 const ClienteIndex = () => import('pages/Cliente/Index.vue')
+const DividasIndex = () => import('pages/Dividas/Index.vue')
 
 const routes = [
   {
@@ -21,7 +22,7 @@ const routes = [
     path: '/dividas',
     component: MainLayout,
     children: [
-      { path: '', component: () => import('pages/Index.vue') }
+      { path: '/dividas', component: DividasIndex }
     ]
   },
 
