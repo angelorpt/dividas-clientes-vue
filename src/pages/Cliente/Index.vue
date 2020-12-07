@@ -11,7 +11,7 @@
               tooltip="Importar Usuário de Json Placeholder"
               icon="cloud_download"
               :loading="integrating"
-              @click="integrarClientes" />
+              @click="integrar" />
 
       <Table  :columns="colunas"
               :data="lstCliente" 
@@ -65,6 +65,10 @@ export default {
 
     loadDados() {
       this.loadClientes();
+    },
+
+    integrar() {
+      this.integrarClientes();
     }
   },
 }
