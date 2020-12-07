@@ -67,7 +67,37 @@ export default {
     }, // actions
     
     getters: {
-        
-        
+
+        listaClientesToTable(state) {
+            let listaClone = [...state.lstCliente];
+            let listaNew   = listaClone.map(item => {
+                return {
+                    ...item,
+                    total: parseFloat(item.total)
+                }
+            });
+            let listaSorted = listaNew.sort((a, b) => a.total < b.total ? 1 : (a.total > b.total ? -1 : 0))
+            let lista = listaSorted.map(item => {
+                return {
+                    ...item,
+                    total: Vue.prototype.$currency(item.total, { symbol: "R$ ", separator: ".", decimal: "," }).format()
+                }
+            })
+            
+            return lista;
+        },
+
+        listaClientesToSelect(state) {
+            let listaClone  = [...state.lstCliente];
+            let listaSorted = listaClone.sort((a, b,) => a.name > b.name ? 1 : (a.name < b.name ? -1 : 0))
+            let listaNew    = listaSorted.map(item => {
+                return {
+                    label : item.name,
+                    value : item.id,
+                }
+            });
+            return listaNew;
+        }
+
     } // getters
 }

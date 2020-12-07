@@ -31,7 +31,7 @@ export default {
   props: {
     icon: String,
     listaMenu: {
-      type: Object
+      type: Array
     }
   },
   data() {

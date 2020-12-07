@@ -2,6 +2,7 @@ import Vue  from 'vue'
 import Vuex from 'vuex'
 
 import Cliente from './cliente'
+import Divida  from './divida'
 
 // import example from './module-example'
 
@@ -21,6 +22,7 @@ export default function (/* { ssrContext } */) {
     modules: {
       // example
       Cliente,
+      Divida,
     },
 
     // enable strict mode (adds overhead!)
