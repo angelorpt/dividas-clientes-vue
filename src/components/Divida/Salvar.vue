@@ -2,9 +2,8 @@
   <div>
 
     <DialogConfirmar  :show="internal_show"
-                      titulo="Nova Dívida"
-                      icon="add_circle"
-                      class="row"
+                      titulo="Dívida"
+                      icon="payments"
                       @close="closeDialog"
                       @click="salvar" >
 
@@ -60,7 +59,7 @@
 
   export default {
     name  : 'PageDividasIndex',
-    props : ['divida_id', 'show'],
+    props : ['divida_id', 'show', 'titulo', 'icon'],
     components : { ButtonMenu, DialogConfirmar, ListaDividas },
     data() {
       return {
@@ -79,7 +78,7 @@
       }
     },
     mounted() {
-      this.loadDados();
+      // this.loadDados();
       this.internal_show = this.show;
     },
     watch: {
@@ -91,20 +90,26 @@
           this.$emit('close', true)
         }
       },
+      async divida_id() {
+        if ((this.divida_id != undefined) || (this.divida_id != null)) {
+          this.loadDivida(this.divida_id);
+        }
+      },
+      dividaToEdit() {
+        this.divida = {...this.dividaToEdit};
+      }
     },    
     computed: {
-      ...mapState   ('Cliente', ['lstCliente']),
+      ...mapState   ('Cliente', ['lstCliente', 'cliente']),
       ...mapGetters ('Cliente', ['listaClientesToSelect', 'listaClientesToTable']),
+      ...mapGetters ('Divida' , ['dividaToEdit']),
     },
     methods: {
       ...mapActions ('Cliente' , ['loadClientes']),
       ...mapActions ('Divida'  , ['salvarDivida', 'loadDivida']),
 
-      loadDados() {
+      async loadDados() {
         this.loadClientes();
-        if (this.divida_id != undefined) {
-          this.divida = this.loadDivida(this.divida_id);
-        }
       },
 
       detalhes(cliente) {
@@ -114,10 +119,10 @@
       closeDialog() {
         this.internal_show = false
         this.divida = {
-          cliente: null,
-          motivo: '',
-          valor: '',
-          data: null
+          cliente : null,
+          motivo  : '',
+          valor   : '',
+          data    : null
         }
       },
 

@@ -3,15 +3,15 @@
     <Container>
       <Titulo titulo="Clientes"
               subtitulo="Lista de Clientes integrados de Json Placeholder"/>
-    </Container>
-
-    <Container>
       
-      <Button label="Importar"
-              tooltip="Importar Usuário de Json Placeholder"
-              icon="cloud_download"
-              :loading="integrating"
-              @click="integrar" />
+      <div class="row justify-end q-mb-md">
+        <Button label="Importar"
+                tooltip="Importar Usuário de Json Placeholder"
+                icon="cloud_download"
+                :loading="integrating"
+                color="primary"
+                @click="integrar" />
+      </div>              
 
       <Table  :columns="colunas"
               :data="lstCliente" 

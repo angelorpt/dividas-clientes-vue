@@ -5,6 +5,7 @@ export default {
     state: () => {
         return {
             lstDivida : [],
+            divida    : {},
             loading   : false,
             saving    : false,
             deleting  : false,
@@ -14,7 +15,10 @@ export default {
     mutations: {
         setLstDivida(state, lista) {
             state.lstDivida = lista;
-        },        
+        },
+        setDivida(state, object) {
+            state.divida = object;
+        },
         setLoading(state, value) {
             state.loading = value
         },
@@ -49,13 +53,13 @@ export default {
         /**
          * Consulta Dívida by ID
          */
-        async loadDivida({ commit, dispatch, rootGetters }, divida) {
+        async loadDivida({ commit, dispatch, rootGetters }, divida_id) {
             commit('setLoading', true);
             const token  = rootGetters["Login/getToken"];
             const config = { headers: { Authorization: `Bearer ${token}` } };
             try {
-                const response = await Vue.prototype.$axios.get(`/dividas/${divida.id}`, config);
-                return response.data;
+                const response = await Vue.prototype.$axios.get(`/dividas/${divida_id}`, config);
+                commit('setDivida', response.data);
             } catch (error) {
                 if (error.response.status == 401) {
                     dispatch('Login/changeToken', null, { root: true });
@@ -78,8 +82,13 @@ export default {
                 valor      : divida.valor.replaceAll(',', '.')
             };
             try {
-                const response = await Vue.prototype.$axios.post('/dividas', data, config);
+                if (divida.id != undefined) {
+                    const response = await Vue.prototype.$axios.put(`/dividas/${divida.id}`, data, config);
+                } else {
+                    const response = await Vue.prototype.$axios.post('/dividas', data, config);
+                }
                 dispatch('Cliente/loadClientes', null, { root: true });
+                dispatch('loadDividas', divida.cliente_id);
             } catch (error) {
                 if (error.response.status == 401) {
                     dispatch('Login/changeToken', null, { root: true });
@@ -111,7 +120,7 @@ export default {
     
     getters: {
         
-        listaDivividaToTable(state) {
+        listaDividaToTable(state) {
             let listaClone  = [...state.lstDivida];
             let listaSorted = listaClone.sort((a, b) => a.data > b.data ? 1 : (a.data < b.data ? -1 : 0))
             let listaNew    = listaSorted.map(item => {
@@ -123,6 +132,20 @@ export default {
             });
 
             return listaNew;
+        },
+
+        dividaToEdit({divida}) {
+             let dividaNew = {
+                ...divida,
+                cliente : { 
+                    label : divida.cliente_nome,
+                    value: parseInt(divida.cliente_id)
+                },
+                data  : Vue.prototype.$moment(divida.data).format('DD/MM/YYYY'),
+                valor : Vue.prototype.$currency(parseFloat(divida.valor), { symbol: "", separator: ".", decimal: ",", precision: 2 }).format()
+            };
+
+            return dividaNew;
         },
 
     } // getters

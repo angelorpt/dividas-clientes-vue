@@ -14,9 +14,9 @@
       </div>              
 
       <q-list class="rounded-borders">
-
         <div v-for="cliente in listaClientesToTable" :key="cliente.id">
           <q-item>
+
             <q-item-section>
               <q-item-label lines="1">{{cliente.name}}</q-item-label>
             </q-item-section>
@@ -24,14 +24,16 @@
             <q-item-section side>
               <span>{{cliente.total}}</span>
             </q-item-section>
-            <q-item-section side top >
-              <Button icon="list_alt" textColor="primary" flat round @click="detalhes(cliente)" />
-            </q-item-section>
-          </q-item>
 
+            <q-item-section side top >
+              <Button icon="list_alt" flat round 
+                      textColor="primary"
+                      @click="detalhes(cliente)" />
+            </q-item-section>
+
+          </q-item>
           <q-separator  />
         </div>
-
       </q-list>
     </Container>
 
@@ -104,24 +106,21 @@ export default {
     ...mapGetters ('Cliente', ['listaClientesToSelect', 'listaClientesToTable']),
   },
   methods: {
-    ...mapActions ('Cliente', ['loadClientes']),
-    ...mapActions ('Divida' , ['salvarDivida']),
+    ...mapActions   ('Cliente', ['loadClientes']),
+    ...mapActions   ('Divida' , ['salvarDivida']),
+    ...mapMutations ('Divida' , ['setCliente']),
 
     loadDados() {
       this.loadClientes();
     },
 
-    teste() {
-      alert('testes');
-    },
-
     detalhes(cliente) {
+      this.setCliente(cliente);
       this.cliente_sel = cliente;
       this.showDialogDividas = true;
     },
 
     closeDialog() {
-      console.log('close');
       this.showDialogAdd     = false
       this.showDialogDividas = false
       this.divida = {

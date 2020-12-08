@@ -1,17 +1,18 @@
 <template>
+
   <div style="width: 100%">
 
     <q-linear-progress indeterminate v-if="loading" />
 
-    <q-scroll-area style="height: 200px;" v-if="!loading" >
+    <q-scroll-area style="height: 250px;" v-if="!loading" >
 
-      <span v-if="listaDivividaToTable.length == 0">Não há dívidas para este cliente</span>
+      <span v-if="listaDividaToTable.length == 0">Não há dívidas para este cliente</span>
 
       <q-list style="width: 100%" v-else >
        
-        <div v-for="divida in listaDivividaToTable" :key="divida.id">
+        <div v-for="divida in listaDividaToTable" :key="divida.id">
         
-          <q-item class="q-gutter-xm">
+          <q-item>
             <q-item-section>
               <q-item-label>{{divida.data}}</q-item-label>
               <q-item-label caption lines="4">{{divida.motivo}}</q-item-label>
@@ -21,9 +22,14 @@
               <q-item-label caption lines="2">{{divida.valor}}</q-item-label>
             </q-item-section>
 
-            <q-item-section side>
+            <q-item-section side class="justify-between">
+              <ButtonAction @click="editar(divida)"
+                            icon="edit" round
+                            tooltip="Editar Dívida"
+                            :permission="true" />
+
               <ButtonAction @click="deletar(divida)"
-                            icon="delete" 
+                            icon="delete" round
                             tooltip="Deletar Dívida"
                             :permission="true" />
             </q-item-section>
@@ -34,6 +40,11 @@
 
       </q-list>
     </q-scroll-area>
+
+    <DividaSalvar :show="showDialogEdit"
+                  :divida_id="divida_id"
+                  @close="closeSalvar" />
+
   </div>
 </template>
 
@@ -41,6 +52,7 @@
 
 import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
 
+import DividaSalvar     from 'components/Divida/Salvar'
 import ButtonAction     from 'components/Utils/ButtonAction'
 
 export default {
@@ -48,9 +60,12 @@ export default {
   props: {
     cliente_id : Number,
   },
-  components: { ButtonAction } ,
+  components: { ButtonAction, DividaSalvar } ,
   data () {
-    return {}
+    return {
+      showDialogEdit : false,
+      divida_id      : null
+    }
   },
   mounted() {
     this.loadDados();
@@ -62,7 +77,7 @@ export default {
   },
   computed: {
     ...mapState   ('Divida' , ['loading']),
-    ...mapGetters ('Divida' , ['listaDivividaToTable']),
+    ...mapGetters ('Divida' , ['listaDividaToTable']),
   },
   methods: {
     ...mapActions ('Divida' , ['loadDividas', 'deletarDivida']),
@@ -75,7 +90,18 @@ export default {
 
     deletar(divida) {
       this.deletarDivida(divida);
+    },
+
+    editar(divida) {
+      this.divida_id = divida.id;
+      this.showDialogEdit = true;
+    },
+
+    closeSalvar() {
+      this.showDialogEdit = false;
+      this.divida_id      = null;
     }
+
   },
 }
 </script>

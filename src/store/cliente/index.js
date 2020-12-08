@@ -5,6 +5,7 @@ export default {
     state: () => {
         return {
             lstCliente  : [],
+            cliente     : {},
             loading     : false,
             deleting    : false,
             integrating : false,
@@ -13,6 +14,9 @@ export default {
     mutations: {
         setLstCliente(state, lista) {
             state.lstCliente = lista;
+        },
+        setCliente(state, object) {
+            state.cliente = object;
         },
         setLoading(state, value) {
             state.loading = value
