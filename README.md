@@ -1,13 +1,13 @@
-# Front-End Dividas (Quasar Framework)
+# Front-End Dívidas (Quasar Framework)
 
-* [Pre-requisitos](#pre-requisitos)
+* [Pré-requisitos](#pré-requisitos)
 
 * [Instalando](#instalando)
 
 * [API](#api)
 
 
-### Pre-requisitos
+### Pré-requisitos
 
 [↑ Menu](#Front-End-Dividas-(Quasar-Framework))
 
