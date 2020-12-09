@@ -7,10 +7,7 @@ export default {
         return {
             token   : null,
             logado  : false,
-            usuario : {
-                name  : '',
-                email : ''
-            },
+            loading : false,
         }
     },
 
@@ -21,14 +18,12 @@ export default {
         setLogado(state, status) {
             state.logado = status;
         },
-        setUsuario({ usuario }, payload) {
-            usuario.name  = payload.name,
-            usuario.email = payload.email
-        }
+        setLoading(state, value) {
+            state.loading = value;
+        },
     },
 
     actions: {
-
 
         // Verifica se o token está válido
         async checkTokenApi({ dispatch }) {
@@ -47,25 +42,21 @@ export default {
             }
         },
 
-        async goLogin({ commit, dispatch }, loginData) {
+        async goLogin({ commit, dispatch }, login) {
 
             try {
-                const response = await Vue.prototype.$axios.post('/login', loginData);
+                commit('setLoading', true)
+                const response = await Vue.prototype.$axios.post('/login', login);
                 if (response.status == 200) {
                     dispatch('changeToken', response.data.token)
-                    return {
-                        status: true
-                    };
+                    commit('setLoading', false)
+                    return { status: true };
                 }
             } catch (error) {
                 dispatch('changeToken', null)
-                return {
-                    status: false,
-                    error: error
-                };
+                commit('setLoading', false)
+                return { status: false, error: error };
             }
-
-
         },
 
         async changeToken({ commit, dispatch }, token) {
@@ -95,7 +86,7 @@ export default {
 
             const token  = state.token;
             const config = { headers: { Authorization: `Bearer ${token}` } };
-            const data   = { token: token },            
+            const data   = { token: token }; 
 
             try {
                 const response = await Vue.prototype.$axios.post('/logout', data, config);
@@ -134,16 +125,6 @@ export default {
         },
         getLogado(state) {
             return state.logado;
-        },
-        usuario({ usuario }) {
-            let array = usuario.nome.split(' ');
-            let first_name = array[0];
-            return {
-                id    : usuario.id,
-                nome  : first_name.toLowerCase(),
-                email : usuario.email,
-                nome_completo : usuario.nome.toLowerCase(),
-            }
         }
     }
 

@@ -1,4 +1,5 @@
 const MainLayout   = () => import('layouts/MainLayout.vue')
+const LayoutLogin  = () => import('layouts/LayoutLogin.vue')
 const ClienteIndex = () => import('pages/Cliente/Index.vue')
 const DividasIndex = () => import('pages/Dividas/Index.vue')
 
@@ -8,6 +9,13 @@ const routes = [
     component: MainLayout,
     children: [
       { path: '', component: () => import('pages/Index.vue') }
+    ]
+  },
+  {
+    path: '/login',
+    component: LayoutLogin,
+    children: [
+      { path: '/login', component: () => import('pages/Login/Login.vue') }
     ]
   },
   {

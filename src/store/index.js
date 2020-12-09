@@ -1,8 +1,9 @@
 import Vue  from 'vue'
 import Vuex from 'vuex'
 
-import Cliente from './cliente'
-import Divida  from './divida'
+import Login    from './login'
+import Cliente  from './cliente'
+import Divida   from './divida'
 
 // import example from './module-example'
 
@@ -20,7 +21,7 @@ Vue.use(Vuex)
 export default function (/* { ssrContext } */) {
   const Store = new Vuex.Store({
     modules: {
-      // example
+      Login,
       Cliente,
       Divida,
     },
