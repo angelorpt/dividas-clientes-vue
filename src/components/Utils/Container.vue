@@ -25,13 +25,11 @@ export default {
     }
   },
   mounted() {
-    this.css_size = this.css_sizes[parseInt(this.size)]
-    console.log('this.css_size', this.css_size)    
+    this.css_size = this.css_sizes[parseInt(this.size)];
   },
   watch: {
     size() {
-      this.css_size = this.css_sizes[parseInt(this.size)]
-      console.log('this.css_size', this.css_size)    
+      this.css_size = this.css_sizes[parseInt(this.size)];
     }
   },
 }

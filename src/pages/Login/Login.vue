@@ -77,9 +77,7 @@ export default {
 
       let result = await this.goLogin(this.login);
 
-      if (result.status) {
-        console.log(result.status);
-      } else {
+      if (result.status == false) {
         let error = result.error;
         if (error.response.status = 401) {
           this.nofificar('Usuário ou Senha Inválidos', 'orange-8', 'center')

@@ -63,23 +63,17 @@ export default {
             if (token) {
                 commit('setToken', token);
                 commit('setLogado', true);
-                dispatch('changeLoggedIn', true);
+                // dispatch('changeLoggedIn', true);
             } else {
                 commit('setToken', null);
                 commit('setLogado', false);
-                dispatch('changeLoggedIn', false);
+                // dispatch('changeLoggedIn', false);
             }
-        },
-
-        removeVuex() {
-            localStorage.removeItem('vuex');
         },
 
         async actLogout({ commit, dispatch }) {
             await dispatch('cancelToken');
             dispatch('changeToken', null);
-            dispatch('removeVuex');
-            dispatch('removeLoggedIn');
         },
 
         async cancelToken({ commit, dispatch, rootGetters, state }) {

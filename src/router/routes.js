@@ -8,7 +8,7 @@ const routes = [
     path: '/',
     component: MainLayout,
     children: [
-      { path: '', component: () => import('pages/Index.vue') }
+      { path: '', component: () => import('pages/Index.vue'), meta: { requiresAuth: true } }
     ]
   },
   {
@@ -22,15 +22,15 @@ const routes = [
     path: '/clientes',
     component: MainLayout,
     children: [
-      { path: '/'        , component: ClienteIndex },
-      { path: '/clientes', component: ClienteIndex }
+      { path: '/'        , component: ClienteIndex, meta: { requiresAuth: true } },
+      { path: '/clientes', component: ClienteIndex, meta: { requiresAuth: true } }
     ]
   },
   {
     path: '/dividas',
     component: MainLayout,
     children: [
-      { path: '/dividas', component: DividasIndex }
+      { path: '/dividas', component: DividasIndex, meta: { requiresAuth: true } }
     ]
   },
 

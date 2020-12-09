@@ -62,6 +62,12 @@ const linksData = [
     icon: 'payments',
     to: '/dividas'
   },
+  {
+    title: 'Sair',
+    caption: null,
+    icon: 'logout',
+    to: '/login'
+  },
 ];
 
 export default {

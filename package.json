@@ -14,7 +14,8 @@
     "core-js": "^3.6.5",
     "currency.js": "^2.0.3",
     "moment": "^2.29.1",
-    "quasar": "^1.0.0"
+    "quasar": "^1.0.0",
+    "secure-ls": "^1.2.6"
   },
   "devDependencies": {
     "@quasar/app": "^2.0.0"
