@@ -3,7 +3,7 @@
 
     <div class="mobile-hide">
       <div class="col-12">
-        <q-img src="assets/login.png" class="loginBackground" />
+        <q-img src="../statics/login.png" class="loginBackground" />
       </div>
     </div>
 

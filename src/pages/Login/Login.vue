@@ -6,7 +6,7 @@
       <div>Pass: admin</div>
 
       <div class="row" id="inputGroup">
-        <div class="col-sm-12 col-xs-12 col-lg-3 col-md-3 offset-lg-1">
+        <div class="col-sm-12 col-xs-12 col-lg-3 col-md-3">
           
           <q-form @submit.prevent="logar" class="q-gutter-md" >
 
